@@ -1,5 +1,6 @@
 package com.appsdeveloperblog.ws.products.service;
 
+import com.appsdeveloperblog.ws.core.ProductCreateEvent;
 import com.appsdeveloperblog.ws.products.rest.CreateProductRestModel;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
