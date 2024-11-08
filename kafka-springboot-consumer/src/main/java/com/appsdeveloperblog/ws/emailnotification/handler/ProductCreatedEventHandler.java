@@ -1,6 +1,6 @@
 package com.appsdeveloperblog.ws.emailnotification.handler;
 
-import jdk.jfr.Category;
+import com.appsdeveloperblog.ws.core.ProductCreateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaHandler;
@@ -16,15 +16,15 @@ import org.springframework.stereotype.Component;
 public class ProductCreatedEventHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductCreatedEventHandler.class);
-
+    private static final String LOG_MARKER = "********";
     
     @KafkaHandler
-    public void handleCreate(@Payload ProductCreatedEvent productCreatedEvent, // @Payload: The deserialized message content
-                       @Header(KafkaHeaders.RECEIVED_TOPIC) String topic, // @Header: Access to message metadata (topic, partition, offset)
-                       @Header(KafkaHeaders.RECEIVED_PARTITION) Integer partition,
-                       @Header(KafkaHeaders.OFFSET) Long offset){
+    public void handleCreate(@Payload ProductCreateEvent productCreatedEvent, // @Payload: The deserialized message content
+                             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic, // @Header: Access to message metadata (topic, partition, offset)
+                             @Header(KafkaHeaders.RECEIVED_PARTITION) Integer partition,
+                             @Header(KafkaHeaders.OFFSET) Long offset){
 
-        LOGGER.info("Received message: topic={}, partition={}, offset={}, payload={}",
+        LOGGER.info(LOG_MARKER + "Received message: topic={}, partition={}, offset={}, payload={}",
                 topic, partition, offset, productCreatedEvent);
 
         // Add your business logic here to handle the product created event

@@ -1,6 +1,6 @@
 package com.appsdeveloperblog.ws.products;
 
-import com.appsdeveloperblog.ws.products.service.ProductCreateEvent;
+import com.appsdeveloperblog.ws.core.ProductCreateEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +16,7 @@ import java.util.Map;
 
 // 用于创建 kafka related beans, 所有使用 @Configuration
 @Configuration
-public class KafkaConfig {
+public class KafkaProducerConfiguration {
 
     // 使用 @Value 注解从 application.properties 文件中获取参数值
     @Value("${spring.kafka.producer.bootstrap-servers}")
