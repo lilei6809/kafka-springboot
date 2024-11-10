@@ -39,11 +39,24 @@ public class ProductServiceImpl implements ProductService {
         productCreateEvent.setQuantity(product.getQuantity());
         productCreateEvent.setTitle(product.getTitle());
 
+        // ProducerRecord 可以 access Message header,
+        // 所以我们使用 ProducerRecord 作为 kafkaTemplate.send 的参数
+        ProducerRecord<String, ProductCreateEvent> producerRecord = new ProducerRecord<>(
+          "product-created-events-topic",
+          productId,
+          productCreateEvent
+        );
+        // 在 header 中加入 unique id
+        // 如果这条 msg 被 consumed, 这个 unique id 将被 store 到 database 中
+        producerRecord.headers().add("messageId", UUID.randomUUID().toString().getBytes());
 
         // publish event with kafka template
         // async publish event
+//        CompletableFuture<SendResult<String, ProductCreateEvent>> future =
+//                kafkaTemplate.send("product-created-events-topic", productId, productCreateEvent);
+
         CompletableFuture<SendResult<String, ProductCreateEvent>> future =
-                kafkaTemplate.send("product-created-events-topic", productId, productCreateEvent);
+                kafkaTemplate.send(producerRecord);
 
         // 不能直接返回 productId
         // 因为此时是异步发送 message 到 broker
