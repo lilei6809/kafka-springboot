@@ -17,6 +17,7 @@
 
     <modules>
         <module>core</module>
+        <module>mockservice</module>
         <module>kafka-springboot-producer</module>
         <module>kafka-springboot-consumer</module>
     </modules>
