@@ -17,9 +17,12 @@
 
     <modules>
         <module>core</module>
-        <module>mockservice</module>
         <module>kafka-springboot-producer</module>
         <module>kafka-springboot-consumer</module>
+        <module>mockservice</module>
+        <module>TransferService</module>
+        <module>WithdrawalService</module>
+        <module>DepositService</module>
     </modules>
 
     <properties>
