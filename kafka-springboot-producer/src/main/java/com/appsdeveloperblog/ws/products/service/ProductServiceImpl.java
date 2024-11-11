@@ -70,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
                 .thenAccept(result -> {
                     // 消息发送成功的处理
                     ProducerRecord<String, ProductCreateEvent> record = result.getProducerRecord();
-                    LOGGER.info("{} Msg sent successfully. {},  Event: {}",
+                    LOGGER.info("{} Async Msg sent successfully. {},  Event: {}",
                             LOG_MARKER,
                             result.getRecordMetadata(),
                             record.value()  // ProductCreateEvent
@@ -101,13 +101,24 @@ public class ProductServiceImpl implements ProductService {
         productCreateEvent.setQuantity(product.getQuantity());
         productCreateEvent.setTitle(product.getTitle());
 
+        // ProducerRecord 可以 access Message header,
+        // 所以我们使用 ProducerRecord 作为 kafkaTemplate.send 的参数
+        ProducerRecord<String, ProductCreateEvent> producerRecord = new ProducerRecord<>(
+                "product-created-events-topic",
+                productId,
+                productCreateEvent
+        );
+        // 在 header 中加入 unique id
+        // 如果这条 msg 被 consumed, 这个 unique id 将被 store 到 database 中
+        producerRecord.headers().add("messageId", UUID.randomUUID().toString().getBytes());
+
         // 方式2：如果必须同步等待，至少加上超时控制
 
         SendResult<String, ProductCreateEvent> result =
-                kafkaTemplate.send("product-created-events-topic", productId, productCreateEvent)
+                kafkaTemplate.send(producerRecord)
                         .get(10, TimeUnit.SECONDS);
 
-        LOGGER.info("{} Message sent successfully. Topic: {}, Partition: {}, Offset: {}, Event: {}",
+        LOGGER.info("{} Sync Message sent successfully. Topic: {}, Partition: {}, Offset: {}, Event: {}",
                 LOG_MARKER,
                 result.getRecordMetadata().topic(),
                 result.getRecordMetadata().partition(),
