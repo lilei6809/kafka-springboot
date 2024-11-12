@@ -1,18 +1,13 @@
-<<<<<<< HEAD
-### Maven ###
-=======
 HELP.md
->>>>>>> 1beea888fb3a5d2ca96723b311bb992f06414900
+
+### Maven ###
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-<<<<<<< HEAD
-=======
 .mvn/
 mvnw
 mvnw.cmd
->>>>>>> 1beea888fb3a5d2ca96723b311bb992f06414900
 
 ### STS ###
 .apt_generated
@@ -41,7 +36,6 @@ build/
 
 ### VS Code ###
 .vscode/
-<<<<<<< HEAD
 
 ### Logs ###
 logs/
@@ -52,5 +46,3 @@ logs/
 
 ### Windows ###
 Thumbs.db
-=======
->>>>>>> 1beea888fb3a5d2ca96723b311bb992f06414900
