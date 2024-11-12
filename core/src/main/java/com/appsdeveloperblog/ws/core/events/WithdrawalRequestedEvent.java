@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.payments.ws.core.events;
+package com.appsdeveloperblog.ws.core.events;
 
 import java.math.BigDecimal;
 

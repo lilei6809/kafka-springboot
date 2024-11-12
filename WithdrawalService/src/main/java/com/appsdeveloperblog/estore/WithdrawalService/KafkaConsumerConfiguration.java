@@ -3,6 +3,7 @@ package com.appsdeveloperblog.estore.WithdrawalService;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.appsdeveloperblog.ws.core.error.RetryableException;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -24,8 +25,8 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.util.backoff.FixedBackOff;
 
-import com.appsdeveloperblog.payments.ws.core.error.NotRetryableException;
-import com.appsdeveloperblog.payments.ws.core.error.RetryableException;
+import com.appsdeveloperblog.ws.core.error.NotRetryableException;
+import com.appsdeveloperblog.ws.core.error.RetryableException;
 
 @Configuration
 public class KafkaConsumerConfiguration {

@@ -1,4 +1,4 @@
-package com.appsdeveloperblog.ws.core;
+package com.appsdeveloperblog.ws.core.events;
 
 import lombok.Data;
 

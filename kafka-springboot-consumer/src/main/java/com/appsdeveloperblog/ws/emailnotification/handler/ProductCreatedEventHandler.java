@@ -1,18 +1,15 @@
 package com.appsdeveloperblog.ws.emailnotification.handler;
 
-import com.appsdeveloperblog.ws.core.ProductCreateEvent;
-import com.appsdeveloperblog.ws.emailnotification.MessageDeduplicationService;
-import com.appsdeveloperblog.ws.emailnotification.error.NotRetryableException;
-import com.appsdeveloperblog.ws.emailnotification.error.RetryableException;
-import com.appsdeveloperblog.ws.emailnotification.io.ProcessedEventEntity;
-import com.appsdeveloperblog.ws.emailnotification.io.ProcessedEventRepository;
+import com.appsdeveloperblog.ws.core.events.ProductCreateEvent;
+import com.appsdeveloperblog.ws.core.error.NotRetryableException;
+import com.appsdeveloperblog.ws.core.error.RetryableException;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SessionCallback;
@@ -29,7 +26,6 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -44,7 +40,6 @@ public class ProductCreatedEventHandler {
     private RestTemplate restTemplate;
 
 
-    private final MessageDeduplicationService deduplicationService;
 
     private static final String PRODUCT_KEY_PREFIX = "product:";
     private static final String PROCESSED_KEY_PREFIX = "msg:processed:";
@@ -54,14 +49,14 @@ public class ProductCreatedEventHandler {
 
     // constructor 会自动注入在 main 中声明的 bean
     public ProductCreatedEventHandler(RestTemplate restTemplate
-    ,  MessageDeduplicationService deduplicationService, RedisTemplate<String, String> redisTemplate, ObjectMapper objectMapper) {
+    , RedisTemplate<String, String> redisTemplate, ObjectMapper objectMapper) {
 
         // then, we can use this resttemplate to send http request to external microservice
         this.restTemplate = restTemplate;
         this.redisTemplate = redisTemplate;
         this.objectMapper = objectMapper;
 
-        this.deduplicationService = deduplicationService;
+
     }
 
     @KafkaHandler
