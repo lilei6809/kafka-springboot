@@ -1,30 +1,14 @@
 package com.appsdeveloperblog.estore.transfers.model;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 
+@Data
 public class TransferRestModel {
     private String senderId;
     private String recepientId;
     private BigDecimal amount;
+    private String transactionId;
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-    public String getSenderId() {
-        return senderId;
-    }
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
-    }
-    public String getRecepientId() {
-        return recepientId;
-    }
-    public void setRecepientId(String recepientId) {
-        this.recepientId = recepientId;
-    }
-
-    
 }
