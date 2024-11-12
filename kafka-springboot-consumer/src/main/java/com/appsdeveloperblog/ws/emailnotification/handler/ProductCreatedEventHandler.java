@@ -40,7 +40,6 @@ public class ProductCreatedEventHandler {
     private RestTemplate restTemplate;
 
 
-
     private static final String PRODUCT_KEY_PREFIX = "product:";
     private static final String PROCESSED_KEY_PREFIX = "msg:processed:";
     private final RedisTemplate<String, String> redisTemplate;
